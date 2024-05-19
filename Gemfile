@@ -5,6 +5,7 @@ source 'https://rubygems.org'
 ruby '3.3.0'
 
 gem 'sidekiq'
+gem 'sidekiq-cron'
 
 gem 'redis'
 
