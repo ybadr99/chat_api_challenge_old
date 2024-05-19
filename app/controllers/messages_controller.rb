@@ -4,7 +4,8 @@ class MessagesController < ApplicationController
   def create
     @message = @chat.messages.new(message_params)
     if @message.save
-      render json: @message
+      UpdateMessagesCountJob.perform_later(@chat.id)
+      render json: @message.slice(:number, :body), status: :created
     else
       render json: @message.errors, status: :unprocessable_entity
     end

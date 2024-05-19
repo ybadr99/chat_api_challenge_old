@@ -30,5 +30,7 @@ module ChatSystemChallenge
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore, key: 'ed3b5d9bf3c1847937c1bb5e39e2cb1d3812ad95b97937957ef7d02b42764ded60a503ae1f65aaaf86af35286f95dcf10ee88afa0fcb2358de2676a58e218ba6'
   end
 end
