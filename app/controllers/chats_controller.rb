@@ -2,12 +2,14 @@ class ChatsController < ApplicationController
   before_action :set_application
 
   def create
-    @chat = @application.chats.new
-    if @chat.save
-      UpdateChatsCountJob.perform_later(@application.id)
-      render json: @chat.slice(:number, :messages_count), status: :created
-    else
-      render json: @chat.errors, status: :unprocessable_entity
+    ActiveRecord::Base.transaction do
+      @chat = @application.chats.new
+      if @chat.save
+        UpdateChatsCountJob.perform_later(@application.id)
+        render json: @chat.slice(:number, :messages_count), status: :created
+      else
+        render json: @chat.errors, status: :unprocessable_entity
+      end
     end
   end
 
